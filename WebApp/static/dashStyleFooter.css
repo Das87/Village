@@ -1,0 +1,17 @@
+footer {
+    background-color: #f1f1f1;
+    position: absolute;
+    top: 92vh;
+    bottom: 0px;
+    width: 100%;
+    /* padding: 20px; */
+    color: white;
+    background-color: black;
+    text-align: center;
+}
+
+
+.copyright {
+    font-size: 11px;
+    margin-top: 12px;
+}

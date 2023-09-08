@@ -1,0 +1,41 @@
+#themes {
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    top: 350px;
+    height: 100px;
+    /* main pointt */
+    
+    /* idhr hihai */
+
+    #left1 {
+        width: 20vw;
+        /* border: 1px solid red; */
+        background:linear-gradient(rgb(255, 60, 0), black, green);
+        border-radius: 10px;
+        opacity: 0.1;
+    }
+
+    #left2 {
+        width: 20vw;
+        background:linear-gradient(rgb(170, 194, 236), rgb(238, 50, 50), rgb(255, 2, 120));
+        border-radius: 10px;
+        opacity: 0.1;
+
+    }
+
+    #right2 {
+        width: 20vw;
+        background:linear-gradient(rgb(200, 255, 0), rgb(245, 14, 14), rgb(68, 1, 1));
+        border-radius: 10px;
+        opacity: 0.1;
+
+    }
+
+    #right1 {
+        width: 20vw;
+        background: linear-gradient(rgb(0, 21, 255), rgb(4, 246, 202), rgb(3, 102, 1));
+        border-radius: 10px;
+        opacity: 0.1;  
+    }
+}

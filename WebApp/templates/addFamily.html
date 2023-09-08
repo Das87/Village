@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Relations Form</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e6f1fe;
+            margin: 0;
+            padding: 0;
+
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .form-group input {
+            flex: 1;
+            padding: 5px;
+            font-size: 14px;
+            width: 100%;
+            margin-right: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group input[type="text"] {
+            height: 30px;
+        }
+
+        .form-group input[type="text"][multiple] {
+            height: 30px; /* Adjust the height as needed */
+        }
+
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .result-container {
+            width: 80%;
+            margin: 0 auto;
+            margin-top: 30px;
+        }
+
+        #result {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #result p {
+            margin: 10px 0;
+        }
+
+        #result strong {
+            margin-right: 10px;
+        }
+    </style>
+    <!-- Place this before Bootstrap's JavaScript -->
+    <!-- jQuery (place this before Bootstrap's JavaScript) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+
+
+</head>
+
+<body>
+    <h1>Family Relations Form</h1>
+    <div class="container">
+        <form id="familyForm" action="/all/people/add/addFamily/submit/" method="post">
+            <!-- Add your input fields here -->
+            <div class="form-group">
+                <input type="text" name="name" placeholder="Name">
+                <input type="text" name="father" placeholder="Father">
+                <input type="text" name="mother" placeholder="Mother">
+                <input type="text" name="husband" placeholder="Husband">
+                <input type="text" name="wife" placeholder="Wife">
+            </div>
+            <div class="form-group">
+                
+                
+            </div>
+
+            <!-- Use the following JavaScript code -->
+            <script>
+                function createMultipleInputs(input, containerId, label) {
+                    const container = document.getElementById(containerId);
+                    container.innerHTML = ''; // Clear previous inputs
+                    const numInputs = parseInt(input.value);
+
+                    for (let i = 1; i <= numInputs; i++) {
+                        const newInput = document.createElement('input');
+                        newInput.type = 'text';
+                        newInput.name = `${label}_${i}`;
+                        newInput.placeholder = `${label} ${i}`;
+                        newInput.className = 'form-control';
+                        container.appendChild(newInput);
+                    }
+                }
+
+            </script>
+
+            
+            <div class="form-group">
+                <input type="text" name="grandfather_count" placeholder="Number of Grandfather" oninput="createMultipleInputs(this, 'grandfatherInputContainer', 'Grandfather')">
+                <div id="grandfatherInputContainer" class="input-container"> </div>
+
+                <input type="text" name="grandmother_count" placeholder="Number of Grandmother" oninput="createMultipleInputs(this, 'grandmotherInputContainer', 'Grandmother')">
+                <div id="grandmotherInputContainer" class="input-container"></div>
+
+                <input type="text" name="son_count" placeholder="Number of Sons" oninput="createMultipleInputs(this, 'sonInputContainer', 'Son')">
+                <div id="sonInputContainer" class="input-container">
+                    <!-- Additional son input boxes will be created here -->
+                   <!--<button id="3">submit</button> -->
+                </div>
+                <input type="text" name="daughter_count" placeholder="Number of Daughters" oninput="createMultipleInputs(this, 'daughterInputContainer', 'Daughter')">
+                <div id="daughterInputContainer" class="input-container">
+                    <!-- Additional daughter input boxes will be created here -->
+                </div>
+                <input type="text" name="grandson_count" placeholder="Number of Grandsons" oninput="createMultipleInputs(this, 'grandsonInputContainer', 'Grandson')">
+                <div id="grandsonInputContainer" class="input-container">
+                    <!-- Additional grandson input boxes will be created here -->
+                </div>
+                <input type="text" name="granddaughter_count" placeholder="Number of Granddaughters" oninput="createMultipleInputs(this, 'granddaughterInputContainer', 'Granddaughter')">
+                <div id="granddaughterInputContainer" class="input-container">
+                    <!-- Additional granddaughter input boxes will be created here -->
+                </div>
+            </div>
+
+            <div class="form-group">
+                
+                <input type="text" name="brother_count" placeholder="Number of Brothers" oninput="createMultipleInputs(this, 'brotherInputContainer', 'Brother')">
+                <div id="brotherInputContainer" class="input-container">
+                    <!-- Additional brother input boxes will be created here -->
+                </div>
+                <input type="text" name="sister_count" placeholder="Number of Sisters" oninput="createMultipleInputs(this, 'sisterInputContainer', 'Sister')">
+                <div id="sisterInputContainer" class="input-container">
+                    <!-- Additional sister input boxes will be created here -->
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" name="uncle_count" placeholder="Number of Uncles" oninput="createMultipleInputs(this, 'uncleInputContainer', 'Uncle')">
+                <div id="uncleInputContainer" class="input-container">
+                    <!-- Additional uncle input boxes will be created here -->
+                </div>
+                <input type="text" name="aunt_count" placeholder="Number of Aunts" oninput="createMultipleInputs(this, 'auntInputContainer', 'Aunt')">
+                <div id="auntInputContainer" class="input-container">
+                    <!-- Additional aunt input boxes will be created here -->
+                </div>
+                <input type="text" name="nephew_count" placeholder="Number of Nephews" oninput="createMultipleInputs(this, 'nephewInputContainer', 'Nephew')">
+                <div id="nephewInputContainer" class="input-container">
+                    <!-- Additional nephew input boxes will be created here -->
+                </div>
+                <input type="text" name="niece_count" placeholder="Number of Nieces" oninput="createMultipleInputs(this, 'nieceInputContainer', 'Niece')">
+                <div id="nieceInputContainer" class="input-container">
+                    <!-- Additional niece input boxes will be created here -->
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" name="cousin_count" placeholder="Number of Cousins" oninput="createMultipleInputs(this, 'cousinInputContainer', 'Cousin')">
+                <div id="cousinInputContainer" class="input-container">
+                    <!-- Additional cousin input boxes will be created here -->
+                </div>
+                <input type="text" name="father_in_law" placeholder="Number of Father-in-laws" oninput="createMultipleInputs(this, 'fatherInLawInputContainer', 'Father_in_law')">
+                <div id="fatherInLawInputContainer" class="input-container">
+                    <!-- Additional father-in-law input boxes will be created here -->
+                </div>
+                <input type="text" name="mother_in_law_count" placeholder="Number of Mother-in-laws" oninput="createMultipleInputs(this, 'motherInLawInputContainer', 'Mother_in_law')">
+                <div id="motherInLawInputContainer" class="input-container">
+                    <!-- Additional mother-in-law input boxes will be created here -->
+                </div>
+                <input type="text" name="brother_in_law_count" placeholder="Number of Brothers-in-law" oninput="createMultipleInputs(this, 'brotherInLawInputContainer', 'Brother_in_law')">
+                <div id="brotherInLawInputContainer" class="input-container">
+                    <!-- Additional brother-in-law input boxes will be created here -->
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" name="sister_in_law_count" placeholder="Number of Sisters-in-law" oninput="createMultipleInputs(this, 'sisterInLawInputContainer', 'Sister_in_law')">
+                <div id="sisterInLawInputContainer" class="input-container">
+                    <!-- Additional sister-in-law input boxes will be created here -->
+                </div>
+                <input type="text" name="son_in_law_count" placeholder="Number of Sons-in-law" oninput="createMultipleInputs(this, 'sonInLawInputContainer', 'Son_in_law')">
+                <div id="sonInLawInputContainer" class="input-container">
+                    <!-- Additional son-in-law input boxes will be created here -->
+                </div>
+                <input type="text" name="daughter_in_law_count" placeholder="Number of Daughters-in-law" oninput="createMultipleInputs(this, 'daughterInLawInputContainer', 'Daughter_in_law')">
+                <div id="daughterInLawInputContainer" class="input-container">
+                    <!-- Additional daughter-in-law input boxes will be created here -->
+                </div>
+                <input type="text" name="stepfather_count" placeholder="Number of Stepfathers" oninput="createMultipleInputs(this, 'stepfatherInputContainer', 'Stepfather')">
+                <div id="stepfatherInputContainer" class="input-container">
+                    <!-- Additional stepfather input boxes will be created here -->
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" name="stepmother_count" placeholder="Number of Stepmothers" oninput="createMultipleInputs(this, 'stepmotherInputContainer', 'Stepmother')">
+                <div id="stepmotherInputContainer" class="input-container">
+                    <!-- Additional stepmother input boxes will be created here -->
+                </div>
+                <input type="text" name="stepson_count" placeholder="Number of Stepsons" oninput="createMultipleInputs(this, 'stepsonInputContainer', 'Stepson')">
+                <div id="stepsonInputContainer" class="input-container">
+                    <!-- Additional stepson input boxes will be created here -->
+                </div>
+                <input type="text" name="stepdaughter_count" placeholder="Number of Stepdaughters" oninput="createMultipleInputs(this, 'stepdaughterInputContainer', 'Stepdaughter')">
+                <div id="stepdaughterInputContainer" class="input-container">
+                    <!-- Additional stepdaughter input boxes will be created here -->
+                </div>
+                <input type="text" name="stepbrother_count" placeholder="Number of Stepbrothers" oninput="createMultipleInputs(this, 'stepbrotherInputContainer', 'Stepbrother')">
+                <div id="stepbrotherInputContainer" class="input-container">
+                    <!-- Additional stepbrother input boxes will be created here -->
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" name="stepsister_count" placeholder="Number of Stepsisters" oninput="createMultipleInputs(this, 'stepsisterInputContainer', 'Stepsister')">
+                <div id="stepsisterInputContainer" class="input-container">
+                    <!-- Additional stepsister input boxes will be created here -->
+                </div>
+                <input type="text" name="half_brother_count" placeholder="Number of Half-brothers" oninput="createMultipleInputs(this, 'halfBrotherInputContainer', 'Half_brother')">
+                <div id="halfBrotherInputContainer" class="input-container">
+                    <!-- Additional half-brother input boxes will be created here -->
+                </div>
+                <input type="text" name="half_sister_count" placeholder="Number of Half-sisters" oninput="createMultipleInputs(this, 'halfSisterInputContainer', 'Half_sister')">
+                <div id="halfSisterInputContainer" class="input-container">
+                    <!-- Additional half-sister input boxes will be created here -->
+                </div>
+                <input type="text" name="godfather_count" placeholder="Number of Godfathers" oninput="createMultipleInputs(this, 'godfatherInputContainer', 'Godfather')">
+                <div id="godfatherInputContainer" class="input-container">
+                    <!-- Additional godfather input boxes will be created here -->
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" name="godmother_count" placeholder="Number of Godmothers" oninput="createMultipleInputs(this, 'godmotherInputContainer', 'Godmother')">
+                <div id="godmotherInputContainer" class="input-container">
+                    <!-- Additional godmother input boxes will be created here -->
+                </div>
+                <input type="text" name="godchild_count" placeholder="Number of Godchildren" oninput="createMultipleInputs(this, 'godchildInputContainer', 'Godchild')">
+                <div id="godchildInputContainer" class="input-container">
+                    <!-- Additional godchild input boxes will be created here -->
+                </div>
+                <input type="text" name="bhabhi_count" placeholder="Number of Bhabhis" oninput="createMultipleInputs(this, 'bhabhiInputContainer', 'Bhabhi')">
+                <div id="bhabhiInputContainer" class="input-container">
+                    <!-- Additional bhabhi input boxes will be created here -->
+                </div>
+                <input type="text" name="great_grandfather_count" placeholder="Number of Great-grandfathers" oninput="createMultipleInputs(this, 'greatGrandfatherInputContainer', 'Great_grandfather')">
+                <div id="greatGrandfatherInputContainer" class="input-container">
+                    <!-- Additional great-grandfather input boxes will be created here -->
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" name="great_grandmother_count" placeholder="Number of Great-grandmothers" oninput="createMultipleInputs(this, 'greatGrandmotherInputContainer', 'Great_grandmother')">
+                <div id="greatGrandmotherInputContainer" class="input-container">
+                    <!-- Additional great-grandmother input boxes will be created here -->
+                </div>
+                <input type="text" name="great_grandson_count" placeholder="Number of Great-grandsons" oninput="createMultipleInputs(this, 'greatGrandsonInputContainer', 'Great_grandson')">
+                <div id="greatGrandsonInputContainer" class="input-container">
+                    <!-- Additional great-grandson input boxes will be created here -->
+                </div>
+                <input type="text" name="great_granddaughter_count" placeholder="Number of Great-granddaughters" oninput="createMultipleInputs(this, 'greatGranddaughterInputContainer', 'Great_granddaughter')">
+                <div id="greatGranddaughterInputContainer" class="input-container">
+                    <!-- Additional great-granddaughter input boxes will be created here -->
+                </div>
+                <input type="text" name="adoptive_parent_count" placeholder="Number of Adoptive Parents" oninput="createMultipleInputs(this, 'adoptiveParentInputContainer', 'Adoptive_parent')">
+                <div id="adoptiveParentInputContainer" class="input-container">
+                    <!-- Additional adoptive parent input boxes will be created here -->
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" name="adopted_child_count" placeholder="Number of Adopted Children" oninput="createMultipleInputs(this, 'adoptedChildInputContainer', 'Adopted_child')">
+                <div id="adoptedChildInputContainer" class="input-container">
+                    <!-- Additional adopted child input boxes will be created here -->
+                </div>
+                <input type="text" name="foster_parent_count" placeholder="Number of Foster Parents" oninput="createMultipleInputs(this, 'fosterParentInputContainer', 'Foster_parent')">
+                <div id="fosterParentInputContainer" class="input-container">
+                    <!-- Additional foster parent input boxes will be created here -->
+                </div>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <!-- Bootstrap JavaScript -->
+</body>
+
+</html>

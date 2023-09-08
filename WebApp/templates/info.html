@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Info</title>
+    <style>
+        /* Add your CSS styling here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        input {
+            padding: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result-container {
+            text-align: center;
+        }
+
+        #result {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+
+        #result p {
+            margin: 10px 0;
+        }
+
+        #result strong {
+            margin-right: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Person Details</h1>
+        <label for="name">Name:</label>
+        <input type="text" id="name">
+        <button onclick="fetchUserInfo()">Show Family Details</button>
+    </div>
+
+    <div class="result-container">
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function capitalizeEachWord(str) {
+            return str.replace(/\b\w/g, (match) => match.toUpperCase());
+        }
+
+        function fetchUserInfo() {
+            let name = document.getElementById('name').value.trim();
+            name = capitalizeEachWord(name);
+            const url = `/api/people/${name}`;
+
+            fetch(url)
+                .then((response) => {
+                    if (response.status === 404) {
+                        throw new Error('User not found');
+                    } else if (!response.ok) {
+                        throw new Error('Error fetching user info');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    displayUserInfo(data);
+                })
+                .catch((error) => {
+                    console.error('Error fetching user info: ', error);
+                    document.getElementById('result').innerHTML = '<p>' + error.message + '</p>';
+                });
+        }
+
+        function displayUserInfo(user) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '';
+
+            if (user.error) {
+                resultDiv.innerHTML = `<p>${user.error}</p>`;
+            } else {
+                let relationsHTML = `<h2>Family Relations for ${user.name}</h2>`;
+                relationsHTML += `
+                    <table>
+                        <tr>
+                            <th>S.No.</th>
+                            <th>Relation</th>
+                            <th>Name</th>
+                        </tr>
+                `;
+                let serialNumber = 1;
+                const relationsOrder = [
+                    "father", "mother", "son", "daughter", "grandfather", "grandmother", "grandson", "granddaughter",
+                    "husband", "wife", "brother", "sister", "uncle", "aunt", "nephew", "niece", "cousin",
+                    "father_in_law", "mother_in_law", "brother_in_law", "sister_in_law", "son_in_law", "daughter_in_law",
+                    "stepfather", "stepmother", "stepson", "stepdaughter", "stepbrother", "stepsister",
+                    "half_brother", "half_sister", "godfather", "godmother", "godchild", "bhabhi",
+                    "great_grandfather", "great_grandmother", "great_grandson", "great_granddaughter",
+                    "adoptive_parent", "adopted_child", "foster_parent",
+                ];
+
+                for (let relation of relationsOrder) {
+                    if (relation in user) {
+                        const names = Array.isArray(user[relation]) ? user[relation].join(', ') : user[relation];
+                
+                        // Check if names is not empty before adding the <tr>
+                        if (names.trim() !== '') {
+                            relationsHTML += `
+                            <tr>
+                                <td><strong>${serialNumber}.</td>
+                                <td>${relation}</td>
+                                <td>${names}</td>
+                            </tr>
+                            `;
+                            serialNumber++;
+                        }
+                    }
+                }
+                relationsHTML += "</table>";
+
+                resultDiv.innerHTML = relationsHTML;
+            }
+        }
+    </script>
+</body>
+</html>
